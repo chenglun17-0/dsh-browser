@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "DSH Browser",
+    "description": "Adds a session-independent, persistent tabbed browser to the DSH main panel."
+  }
+}

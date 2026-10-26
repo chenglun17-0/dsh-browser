@@ -1,0 +1,10 @@
+- id: ui-sidebar-browser
+  name: '@deepseek-ai/dsh-client-ui-sidebar-browser'
+  disabled: true
+
+- insert:
+    - id: dsh-browser
+      name: '@chenglun17-0/dsh-browser'
+      config:
+        defaultUrl: 'https://www.google.com/'
+        afterSendBehavior: open-session
