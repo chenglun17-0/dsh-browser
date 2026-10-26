@@ -3123,7 +3123,7 @@ function createDesktopController(tab, bridge) {
       });
     }
   };
-  bridge.acquire("plugin:tower-global-browser").then((reservation) => {
+  bridge.acquire("plugin:dsh-browser").then((reservation) => {
     if (disposed) {
       bridge.release(reservation.lease).catch(() => {
       });
@@ -3907,7 +3907,7 @@ function SidebarResizeHandle({ locale, width, onResize, onCommit, onResizingChan
     }
   );
 }
-function TowerMainAnchor() {
+function BrowserMainAnchor() {
   const hostRef = React.useRef(null);
   React.useLayoutEffect(() => {
     const host = hostRef.current;
@@ -4138,7 +4138,7 @@ function BrowserPanel({ locale, workspaces, sendPortal }) {
     ] })
   ] });
 }
-function TowerOverlay({ locale, workspaceSource, sendPortal }) {
+function BrowserOverlay({ locale, workspaceSource, sendPortal }) {
   const layout = usePanelLayout();
   const workspaces = useWorkspaceItems(workspaceSource);
   return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { "aria-hidden": !layout.active, style: {
@@ -4265,7 +4265,7 @@ function apply(ctx) {
     name: "shell.overlay",
     id: "dsh-browser-overlay",
     order: -100
-  }, () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TowerOverlay, { locale: ctx.locale, workspaceSource: ctx.workspaces.list, sendPortal }))), "dsh-browser.overlay");
+  }, () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(BrowserOverlay, { locale: ctx.locale, workspaceSource: ctx.workspaces.list, sendPortal }))), "dsh-browser.overlay");
   ctx.effect(() => ctx.slots.inject("sidebar.panellist", () => ctx.slots.register({
     name: "sidebar.panellist",
     id: PANEL_ID,
@@ -4275,7 +4275,7 @@ function apply(ctx) {
   ctx.effect(() => ctx.slots.inject("main", () => ctx.slots.register({
     name: "main",
     key: PANEL_ID
-  }, TowerMainAnchor)), "dsh-browser.panel");
+  }, BrowserMainAnchor)), "dsh-browser.panel");
 }
     return module.exports;
   },
