@@ -1,6 +1,15 @@
 # DSH Browser
 
-为 DeepSeek Harness（DSH）提供一个全局、多标签、可持久化的浏览器面板。它支持原生桌面导航，并可通过“任意门”把网页选文或局部截图直接发送到指定 DSH 工作区的新会话。
+为 DeepSeek Harness（DSH）Desktop 提供一个全局、多标签、可持久化的浏览器面板。它使用桌面端原生 WebView 导航，并可通过“任意门”把网页选文或局部截图直接发送到指定 DSH 工作区的新会话。
+
+> [!IMPORTANT]
+> **本插件仅支持 DSH Desktop，不支持 DSH Web。** 浏览器导航、网页选文和区域截图依赖 Desktop 提供的 `dshDesktop` 原生桥接；在 `dsh web` 或普通浏览器环境中不属于受支持的使用方式。
+
+## 平台要求
+
+- DSH Desktop，且原生桥接协议 `dshDesktop.protocolVersion` 为 `1`
+- 一个供 DSH Desktop 使用的 profile；下文以 `<desktop-profile>` 表示
+- DSH Web、`dsh web` 和普通浏览器页面不受支持
 
 ## 功能
 
@@ -16,21 +25,9 @@
 
 “任意门”对应浏览器标签栏顶部的“发送到 DSH”按钮，仅在 DSH Desktop 的原生浏览器模式中可用。
 
-~~~mermaid
-flowchart LR
-    A[浏览网页] --> B{已选中文字?}
-    B -->|是| C[读取选文]
-    B -->|否| D[拖动框选网页区域]
-    D --> E[生成 PNG 截图]
-    C --> F[选择 DSH 工作区]
-    E --> F
-    F --> G[填写或补充说明]
-    G --> H[发送]
-    H --> I[创建新会话并提交内容]
-    I --> J{发送后行为}
-    J -->|open-session| K[打开新会话]
-    J -->|stay-browser| L[留在浏览器]
-~~~
+![任意门操作流程](./docs/portal-demo.gif)
+
+动画的可缩放静态源文件见 [docs/portal-demo.svg](./docs/portal-demo.svg)。
 
 ### 发送网页选文
 
@@ -53,23 +50,23 @@ flowchart LR
 
 ### 从 GitHub 安装
 
-将 `<profile>` 替换成实际使用的 DSH profile，并固定到可信的 tag 或 commit：
+将 `<desktop-profile>` 替换成 DSH Desktop 实际使用的 profile。以下命令固定安装 `v0.1.1`：
 
 ~~~bash
-dsh plugin --profile <profile> add github:chenglun17-0/dsh-browser#<tag-or-commit>
+dsh plugin --profile <desktop-profile> add github:chenglun17-0/dsh-browser#v0.1.1
 ~~~
 
 检查配置层并启动：
 
 ~~~bash
-dsh --profile <profile> --dump-config
-dsh --profile <profile>
+dsh --profile <desktop-profile> --dump-config
+dsh --profile <desktop-profile>
 ~~~
 
 移除插件：
 
 ~~~bash
-dsh plugin --profile <profile> remove @chenglun17-0/dsh-browser
+dsh plugin --profile <desktop-profile> remove @chenglun17-0/dsh-browser
 ~~~
 
 ### 从本地源码安装
@@ -79,7 +76,7 @@ git clone https://github.com/chenglun17-0/dsh-browser.git
 cd dsh-browser
 npm ci
 npm run build
-dsh plugin --profile <profile> add .
+dsh plugin --profile <desktop-profile> add .
 ~~~
 
 ## 配置
@@ -107,9 +104,10 @@ dsh plugin --profile <profile> add .
 
 ## 运行环境与限制
 
-- 任意门的选文读取和区域截图依赖 DSH Desktop 原生浏览器桥接；普通 Web 环境的 iframe 回退模式不提供该能力。
-- 普通 Web 环境下，带有 `X-Frame-Options` 或严格 `frame-ancestors` 策略的网站可能拒绝嵌入。
-- 标签状态保存在当前 DSH 前端的本地存储中，不会在不同设备间自动同步。
+- 仅支持 DSH Desktop；不支持 DSH Web、`dsh web` 或普通浏览器环境。
+- 浏览器导航、网页选文和区域截图均依赖 Desktop 原生桥接；桥接不可用时不提供兼容性保证。
+- 部分网站可能因登录策略、自动化检测或 Chromium WebView 兼容性限制而无法正常使用。
+- 标签状态保存在当前 DSH Desktop 前端的本地存储中，不会在不同设备间自动同步。
 
 ## 开发
 

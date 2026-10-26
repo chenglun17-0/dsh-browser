@@ -1,6 +1,6 @@
 {
   "name": "@chenglun17-0/dsh-browser",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
   "type": "module",
   "description": "Global tabbed browser panel for DSH with persistent state, native Desktop navigation, and Send to DSH.",
@@ -30,6 +30,8 @@
     "cordis.patch.yml",
     "locale/*.json",
     "icon.svg",
+    "docs/portal-demo.gif",
+    "docs/portal-demo.svg",
     "THIRD_PARTY_NOTICES.md"
   ],
   "dsh": {

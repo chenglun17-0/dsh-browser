@@ -8,3 +8,6 @@ yarn-error.log*
 coverage/
 .env
 .env.*
+docs/*.render.json
+docs/*.motion.json
+docs/*-contact-sheet.png
